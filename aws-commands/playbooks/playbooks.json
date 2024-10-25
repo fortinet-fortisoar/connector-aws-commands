@@ -1,0 +1,3267 @@
+{
+  "type": "workflow_collections",
+  "data": [
+    {
+      "@type": "WorkflowCollection",
+      "name": "Sample - AWS Commands - 1.0.0",
+      "description": "Sample playbooks for \"AWS Commands\" connector. If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection, since the sample playbook collection gets deleted during connector upgrade and delete.",
+      "visible": true,
+      "image": "/api/3/images/5aebaa18-a6b8-416a-b8be-f5d61f4b6111",
+      "uuid": "a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+      "recordTags": [],
+      "workflows": [
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Volume: Detach Volume",
+          "aliasName": null,
+          "description": "Detaches a volume from an AWS Commands instance based on the volume ID, Device Name, and instance ID you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/6bd87a35-90f0-4be9-b490-90e63aad9092",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Detach Volume",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "force": true,
+                  "volume_id": "vol-0e465f26f3d575e29",
+                  "assume_role": "",
+                  "device_name": "/dev/xvda",
+                  "instance_id": "i-0a5c62c1ef779bb6f"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "detach_volume",
+                "operationTitle": "Detach Volume To Instance",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": {
+                  "State": "",
+                  "Device": "",
+                  "VolumeId": "",
+                  "AttachTime": "",
+                  "InstanceId": "",
+                  "ResponseMetadata": {
+                    "RequestId": "",
+                    "HTTPHeaders": {
+                      "date": "",
+                      "vary": "",
+                      "server": "",
+                      "content-type": "",
+                      "transfer-encoding": ""
+                    },
+                    "RetryAttempts": "",
+                    "HTTPStatusCode": ""
+                  }
+                }
+              },
+              "status": null,
+              "left": "200",
+              "top": "126",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "60474593-05ef-4757-a0f8-2a94adfca194"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "b7549d2f-66d4-4b8e-bcce-019f2ee25206",
+                "title": "AWS Commands: Detach Volume",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "30",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "6bd87a35-90f0-4be9-b490-90e63aad9092"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "82ac82d8-4334-4ffc-8608-5927d40d4831",
+              "name": "Alerts -> Detach Volume to Instance",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/60474593-05ef-4757-a0f8-2a94adfca194",
+              "sourceStep": "/api/3/workflow_steps/6bd87a35-90f0-4be9-b490-90e63aad9092"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606714569,
+          "priority": null,
+          "uuid": "0af0daf4-dd6f-4e01-a2db-db644374ee47",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Detach Instance From Auto Scaling Group",
+          "aliasName": null,
+          "description": "Detaches an EC2 instance from the auto scaling group on AWS Commands based on the auto scaling group name and instance ID (s) you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/406d5acd-4854-45b6-8830-d91f170264a5",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "3140b3a3-83ee-4847-b2fa-26fdc0fd515a",
+                "title": "AWS Commands: Detach Instance From Auto Scaling Group",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "11",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "406d5acd-4854-45b6-8830-d91f170264a5"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Detach Instance From Auto Scaling Group",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": "",
+                  "instance_id": "i-070b5e78490923c1e",
+                  "autoscaling_group_name": "test"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "detach_instance_from_autoscaling_group",
+                "operationTitle": "Detach Instance From Auto Scaling Group",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": []
+              },
+              "status": null,
+              "left": "193",
+              "top": "131",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "ceae1ac0-e083-4c6a-9d18-f2c5a6d6aafc"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "00486e39-4f27-4962-9110-ea33b5c2150b",
+              "name": "Alerts -> Detach Instance From Auto Scaling Group",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/ceae1ac0-e083-4c6a-9d18-f2c5a6d6aafc",
+              "sourceStep": "/api/3/workflow_steps/406d5acd-4854-45b6-8830-d91f170264a5"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606712939,
+          "priority": null,
+          "uuid": "164f938b-e092-4378-83c3-2b322a9e945f",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Attach Instance To Auto Scaling Group",
+          "aliasName": null,
+          "description": "Attaches a running instance to the auto scaling group on AWS Commands based on the auto scaling group name and instance ID (s) you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/a18b6f08-d50b-4bca-9010-03eaf905bedd",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "09a1aeb2-13f3-4be5-a6b3-5aa4c706d722",
+                "title": "AWS Commands: Attach Instance To Auto Scaling Group",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "a18b6f08-d50b-4bca-9010-03eaf905bedd"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Attach Instance To Auto Scaling Group",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": "",
+                  "instance_id": "['i-070b5e78490923c1e']",
+                  "autoscaling_group_name": "test"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "attach_instance_to_auto_scaling_group",
+                "operationTitle": "Attach Instance To Auto Scaling Group",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "180",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "bda19f59-586d-4bd7-82ec-693d27d5efcd"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "6ef10347-d6b7-4f61-bb36-605b7bb67c07",
+              "name": "Alerts -> Attach Instance To Auto Scaling Group",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/bda19f59-586d-4bd7-82ec-693d27d5efcd",
+              "sourceStep": "/api/3/workflow_steps/a18b6f08-d50b-4bca-9010-03eaf905bedd"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606712833,
+          "priority": null,
+          "uuid": "1ebda3ae-e17c-4f1e-8224-4df18d7db429",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Instance: Reboot Instance",
+          "aliasName": null,
+          "description": "Reboots an instance you have specified using the instance ID on AWS Commands.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/eec3dbc6-733e-42de-a01a-7d088001ab16",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Reboot Instance",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": "",
+                  "instance_id": "i-070b5e78490923c1e"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "reboot_instance",
+                "operationTitle": "Reboot Instance",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "208",
+              "top": "107",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "2bafbeb3-8e5b-4614-ad30-9cb04b4f1b01"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "65e2d52d-b66e-4960-902c-7a458a84c460",
+                "title": "AWS Commands: Reboot Instance",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "eec3dbc6-733e-42de-a01a-7d088001ab16"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "378665aa-7001-4413-9555-ac33895c0564",
+              "name": "Alerts -> Reboot Instance",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/2bafbeb3-8e5b-4614-ad30-9cb04b4f1b01",
+              "sourceStep": "/api/3/workflow_steps/eec3dbc6-733e-42de-a01a-7d088001ab16"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606373875,
+          "priority": null,
+          "uuid": "2b0513a1-14d8-43dc-9cd0-bc13da0b1722",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Instance: Stop Instance",
+          "aliasName": null,
+          "description": "Stops an instance you have specified using the instance ID on AWS Commands.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/113e65fd-bba6-43f7-a03b-1cfadc42b063",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "0dfe9e9e-9157-4d35-8c44-c7ad5ab464b5",
+                "title": "AWS Commands: Stop Instance",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "74",
+              "top": "87",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "113e65fd-bba6-43f7-a03b-1cfadc42b063"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Stop Instance",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": "",
+                  "instance_id": "i-0a5c62c1ef779bb6f"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "stop_instance",
+                "operationTitle": "Stop Instance",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": {
+                  "ResponseMetadata": {
+                    "RequestId": "",
+                    "HTTPHeaders": [],
+                    "RetryAttempts": "",
+                    "HTTPStatusCode": ""
+                  },
+                  "StoppingInstances": [
+                    {
+                      "InstanceId": "",
+                      "CurrentState": {
+                        "Code": "",
+                        "Name": ""
+                      },
+                      "PreviousState": {
+                        "Code": "",
+                        "Name": ""
+                      }
+                    }
+                  ]
+                }
+              },
+              "status": null,
+              "left": "231",
+              "top": "190",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "a90f2da2-eead-474d-9eec-e7a072d1f454"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "a9b3f1cd-f24b-4281-8eec-ff0b2959db1f",
+              "name": "Alerts -> Stop Instance",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/a90f2da2-eead-474d-9eec-e7a072d1f454",
+              "sourceStep": "/api/3/workflow_steps/113e65fd-bba6-43f7-a03b-1cfadc42b063"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606715170,
+          "priority": null,
+          "uuid": "30a42b0e-8561-4dfd-b8f9-f86f15b9d918",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Security Group: Revoke Ingress",
+          "aliasName": null,
+          "description": "Removes (revokes) egress rules from a security group on AWS Commands based on the security group ID, and IP permissions you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/51dcaaed-6e77-4ae1-b88f-0bb00021bcd1",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Revoke Ingress",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": "",
+                  "ip_permissions": "[{\"IpProtocol\": \"-1\", \"IpRanges\": [{\"CidrIp\": \"0.0.0.0/0\"}], \"Ipv6Ranges\": [], \"PrefixListIds\": [], \"UserIdGroupPairs\": []}]",
+                  "security_group_id": "sg-0d8315d0baf8ac704"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "revoke_ingress",
+                "operationTitle": "Revoke Ingress",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "200",
+              "top": "92",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "44234969-79c7-4536-8b5f-faf9708b8c77"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "c36c0700-8acc-4594-a517-8206cfbb897a",
+                "title": "AWS Commands: Revoke Ingress",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "51dcaaed-6e77-4ae1-b88f-0bb00021bcd1"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "198b66fa-0c4c-4544-84f7-c03c6502854a",
+              "name": "Alerts -> Revoke Ingress",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/44234969-79c7-4536-8b5f-faf9708b8c77",
+              "sourceStep": "/api/3/workflow_steps/51dcaaed-6e77-4ae1-b88f-0bb00021bcd1"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606715857,
+          "priority": null,
+          "uuid": "35473596-f59a-4898-b809-92772d37aedd",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Instance: Deregister Instance from ELB",
+          "aliasName": null,
+          "description": "Deregisters an AWS Commands instance to the elastic load balancing (ELB) service on AWS based on the ELB name and instance ID you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/08978ab4-2c1f-4099-9791-64c621da6f4e",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "19f8d084-ab05-461f-a9d6-f4aef635504a",
+                "title": "AWS Commands: Deregister Instance from ELB",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "68",
+              "top": "48",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "08978ab4-2c1f-4099-9791-64c621da6f4e"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Deregister Instance from ELB",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "elb_name": "demo",
+                  "assume_role": "",
+                  "instance_id": "i-070b5e78490923c1e"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "deregister_instance_from_elb",
+                "operationTitle": "Deregister Instance from ELB",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": []
+              },
+              "status": null,
+              "left": "252",
+              "top": "149",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "c4f8fd86-8652-448f-a34d-1f9b229a9705"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "ea17ec6b-ad43-4db8-a017-2e4318e9d277",
+              "name": "Alerts -> Deregister Instance from ELB",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/c4f8fd86-8652-448f-a34d-1f9b229a9705",
+              "sourceStep": "/api/3/workflow_steps/08978ab4-2c1f-4099-9791-64c621da6f4e"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606481728,
+          "priority": null,
+          "uuid": "372a9aab-435c-45ce-9bff-cc8bfb75f2bb",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get AMIs Details",
+          "aliasName": null,
+          "description": "Retrieves details for all AMIs (Amazon Machine Images) or specific AMIs, based on input parameters you have specified, from AWS.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/ab38ff33-d03d-47a8-b454-5aa104b7d48b",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get AMIs Details",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "d9ddce5b-168a-433f-9edf-07cba523da26",
+                "params": {
+                  "owners": "[]",
+                  "filters": "",
+                  "role_arn": "arn:aws:iam::814682495653:role/aws-service-role/autoscaling.amazonaws.com/AWSServiceRoleForAutoScaling",
+                  "image_ids": "['ami-ca2e09af']",
+                  "aws_region": "us-east-2",
+                  "assume_role": true,
+                  "session_name": "test",
+                  "Executable Users": "[]",
+                  "executable_users": "[]"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "get_details_for_all_images",
+                "operationTitle": "Get Details for All Images",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": {
+                  "Images": [
+                    {
+                      "Name": "",
+                      "ImageId": ""
+                    }
+                  ]
+                }
+              },
+              "status": null,
+              "left": "172",
+              "top": "151",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "90c6cde9-bff4-4d90-9960-5a15ebff6a73"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "7ce3d294-117f-4496-b8ad-98bee64346db",
+                "title": "AWS Commands: Get AMIs Detail",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "28",
+              "top": "40",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "ab38ff33-d03d-47a8-b454-5aa104b7d48b"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "2b300670-f055-4b53-bf49-e783a5302583",
+              "name": "Alerts -> Get Details for All Images",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/90c6cde9-bff4-4d90-9960-5a15ebff6a73",
+              "sourceStep": "/api/3/workflow_steps/ab38ff33-d03d-47a8-b454-5aa104b7d48b"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606735866,
+          "priority": null,
+          "uuid": "38c08bbd-6550-4ddf-8b2d-3e87fc681e26",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Volume: Attach Volume",
+          "aliasName": null,
+          "description": "Attaches a volume to an AWS Commands instance based on the volume ID, Device Name, and instance ID you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/ce20dd9e-d47b-4103-a931-88683c690bf5",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Attach Volume",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "volume_id": "vol-0cbe1143aeed8ba33",
+                  "assume_role": "",
+                  "device_name": "/dev/sda1",
+                  "instance_id": "i-0a5c62c1ef779bb6f"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "attach_volume",
+                "operationTitle": "Attach Volume To Instance",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": {
+                  "State": "",
+                  "Device": "",
+                  "VolumeId": "",
+                  "AttachTime": "",
+                  "InstanceId": "",
+                  "ResponseMetadata": {
+                    "RequestId": "",
+                    "HTTPHeaders": {
+                      "date": "",
+                      "vary": "",
+                      "server": "",
+                      "content-type": "",
+                      "transfer-encoding": ""
+                    },
+                    "RetryAttempts": "",
+                    "HTTPStatusCode": ""
+                  }
+                }
+              },
+              "status": null,
+              "left": "200",
+              "top": "109",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "cc8cc29e-0604-43ac-8735-85b6d1ce7d72"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "17035b16-cf19-4b04-b68b-5dc9f8375031",
+                "title": "AWS Commands: Attach Volume",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "7",
+              "top": "9",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "ce20dd9e-d47b-4103-a931-88683c690bf5"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "30181edc-66c8-429d-b7c0-d87d239c1bf2",
+              "name": "Alerts -> Attach Volume To Instance",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/cc8cc29e-0604-43ac-8735-85b6d1ce7d72",
+              "sourceStep": "/api/3/workflow_steps/ce20dd9e-d47b-4103-a931-88683c690bf5"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606714580,
+          "priority": null,
+          "uuid": "3afb4338-0145-4664-9009-e28e4d2ff977",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Instance: Add Instance Tag",
+          "aliasName": null,
+          "description": "Adds a tag to an available AWS Commands instance you have specified using the instance ID.Tags must be added in a key-value pair.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/77731d71-b6f5-430b-a744-e80ea0b64155",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Add Instance Tag",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "tag_key": "Name",
+                  "tag_value": "Demo",
+                  "assume_role": "",
+                  "instance_id": "i-070b5e78490923c1e"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "add_tag_to_instance",
+                "operationTitle": "Add Tag to Instance",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": []
+              },
+              "status": null,
+              "left": "240",
+              "top": "180",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "09d7f7c8-f7cb-42df-8c47-f6b1b2f0e537"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "3fb156c4-b9bb-464c-9c6a-d7a602b677eb",
+                "title": "AWS Commands: Add Instance Tag",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "71",
+              "top": "68",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "77731d71-b6f5-430b-a744-e80ea0b64155"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "476fb725-821e-4553-b29a-8b2f5d4cbc53",
+              "name": "Alerts -> Add Tag to Instance",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/09d7f7c8-f7cb-42df-8c47-f6b1b2f0e537",
+              "sourceStep": "/api/3/workflow_steps/77731d71-b6f5-430b-a744-e80ea0b64155"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606376124,
+          "priority": null,
+          "uuid": "4e53e19a-562f-41ca-b714-da6c0de8c0a1",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Instance: Launch Instance",
+          "aliasName": null,
+          "description": "Launches a new instance on AWS having basic configuration based on the image ID, instance type, and other input parameters you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/ebd14691-892b-4ced-8a7c-2b396911cb60",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Launch Instance",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "purpose": "",
+                  "image_id": "ami-ca2e09af",
+                  "maxcount": 1,
+                  "mincount": 1,
+                  "subnetid": "subnet-9f8090e5",
+                  "assume_role": "",
+                  "device_name": "/dev/sda1",
+                  "customer_name": "",
+                  "instance_type": "t2.micro",
+                  "terminate_by_date": "",
+                  "security_groups_list": "",
+                  "delete_on_termination": false
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "launch_instance",
+                "operationTitle": "Launch New Instance",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": {
+                  "InstanceId": "",
+                  "InstanceType": {
+                    "Value": ""
+                  },
+                  "ResponseMetadata": {
+                    "RequestId": "",
+                    "HTTPHeaders": {
+                      "date": "",
+                      "vary": "",
+                      "server": "",
+                      "content-type": "",
+                      "transfer-encoding": ""
+                    },
+                    "RetryAttempts": "",
+                    "HTTPStatusCode": ""
+                  }
+                }
+              },
+              "status": null,
+              "left": "209",
+              "top": "127",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "1b163666-a16c-4f6f-a7ed-f9dd159067b9"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "64750aeb-f6c2-4ff0-9d14-9315d3c96a0c",
+                "title": "AWS Commands: Launch Instance",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "ebd14691-892b-4ced-8a7c-2b396911cb60"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "830793db-6919-4a63-80c7-c9788b95eadd",
+              "name": "Alerts -> Launch New Instance",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/1b163666-a16c-4f6f-a7ed-f9dd159067b9",
+              "sourceStep": "/api/3/workflow_steps/ebd14691-892b-4ced-8a7c-2b396911cb60"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606373725,
+          "priority": null,
+          "uuid": "4eb179b3-b8fb-4a70-a6af-d9302f4afa58",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "ACL: Delete Network ACL",
+          "aliasName": null,
+          "description": "Deletes the specified network ACL. from AWS Commands, based on the Network ACL ID you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/19c08bda-f221-4657-a219-213cf13dff93",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "074cc3ab-b2f8-4361-a37e-89f852dea5b0",
+                "title": "AWS Commands: Delete Network ACL",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "19c08bda-f221-4657-a219-213cf13dff93"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Delete Network ACL",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": false,
+                  "network_acl_id": "acl-06f21b95a285e86a6"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "delete_network_acl",
+                "operationTitle": "Delete Network ACL",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "35074fd3-4976-4447-85ba-b4d620c4d481"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "24c103c5-dd9c-4e2a-a7cd-ee7cbcdc8908",
+              "name": "Alerts -> Delete Network ACL",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/35074fd3-4976-4447-85ba-b4d620c4d481",
+              "sourceStep": "/api/3/workflow_steps/19c08bda-f221-4657-a219-213cf13dff93"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606712191,
+          "priority": null,
+          "uuid": "4f6197bb-7b44-49c7-bd2f-28a3209efb74",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "ACL: Delete Network ACL Rule",
+          "aliasName": null,
+          "description": "Deletes the network ACL from AWS Commands,  based on the network ACL ID, Egress rule, and rule number you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/a3f66475-fb3a-40c4-8902-fcb5e7879985",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "7f007370-4ce7-4953-afc4-2d34e3afbb95",
+                "title": "AWS Commands: Delete Network ACL Rule",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "a3f66475-fb3a-40c4-8902-fcb5e7879985"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Delete Network ACL Rule",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": false,
+                  "egress_rule": "Outbound Rule",
+                  "rule_number": 1,
+                  "network_acl_id": "acl-0930e2b07d3b6cd5d"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "delete_network_acl_rule",
+                "operationTitle": "Delete Network ACL Rule",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "f28a2cd8-8ae6-4808-9780-67db394f3d4f"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "866cbad7-a539-464a-b356-c0c7e48629ff",
+              "name": "Alerts -> Delete Network ACL Rule",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/f28a2cd8-8ae6-4808-9780-67db394f3d4f",
+              "sourceStep": "/api/3/workflow_steps/a3f66475-fb3a-40c4-8902-fcb5e7879985"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606712284,
+          "priority": null,
+          "uuid": "56e63495-e3af-4de1-be5d-b3eb8a873ccf",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Instance: Add Security Group to Instance",
+          "aliasName": null,
+          "description": "Adds a security group to an AWS Commands instance based on the security group name(s) or ID(s) and instance ID you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/dadf1326-b983-44d4-9d8b-ec3c2faa17ff",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "9ed1f40c-3a8f-496e-85e4-8020b47c5814",
+                "title": "AWS Commands: Add Security Group to Instance",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "72",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "dadf1326-b983-44d4-9d8b-ec3c2faa17ff"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Add Security Group to Instance",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "group_list": "[\"default\", \"demo\"]",
+                  "assume_role": "",
+                  "instance_id": "i-070b5e78490923c1e"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "add_security_group_to_instance",
+                "operationTitle": "Add Security Group to Instance",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": []
+              },
+              "status": null,
+              "left": "240",
+              "top": "128",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "f22296f4-a77b-4fc1-a24b-6be414e62e2f"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "cd60fa53-f58e-493c-ba5e-f4721237e3c7",
+              "name": "Alerts -> Add Security Group to Instance",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/f22296f4-a77b-4fc1-a24b-6be414e62e2f",
+              "sourceStep": "/api/3/workflow_steps/dadf1326-b983-44d4-9d8b-ec3c2faa17ff"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606716116,
+          "priority": null,
+          "uuid": "76e4db6b-4f06-4992-aabf-4d6c3d50a0e1",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Security Group: Get Details of Security Group",
+          "aliasName": null,
+          "description": "Retrieves details of given security group from the AWS Commands service.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/7bd8b00d-5031-48a6-8c6c-a48d489dacac",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Details of Security Group",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": false,
+                  "security_group_id": "sg-0d8315d0baf8ac704"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "get_details_of_security_group",
+                "operationTitle": "Get Details of Security Group",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "211",
+              "top": "150",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "55723fce-adc7-46a0-ace3-fff8b2408701"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start",
+              "description": null,
+              "arguments": {
+                "route": "207feb4a-518c-4ccf-894f-1b013e7282d1",
+                "title": "AWS Commands: Get Details of Security Group",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "7bd8b00d-5031-48a6-8c6c-a48d489dacac"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "4c70e5ef-4a89-4000-8329-926eab80b63b",
+              "name": "Start -> Get Details of Security Group",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/55723fce-adc7-46a0-ace3-fff8b2408701",
+              "sourceStep": "/api/3/workflow_steps/7bd8b00d-5031-48a6-8c6c-a48d489dacac"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606715474,
+          "priority": null,
+          "uuid": "777fab32-d2e8-4697-87f9-f109ac329dcc",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "ACL: Get Details of Network ACLs",
+          "aliasName": null,
+          "description": "Retrieves details of one or more of your network ACLs from AWS Commands, based on the Network ACL IDs and filters you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/6137e416-b925-42ad-80bd-9a1b6fd52b01",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "9f665655-f0b6-452c-a1c3-97a900258d05",
+                "title": "AWS Commands: Get Details of Network ACLs",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "6137e416-b925-42ad-80bd-9a1b6fd52b01"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Details of Network ACLs",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "filters": "",
+                  "assume_role": false,
+                  "network_acl_ids": ""
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "describe_network_acls",
+                "operationTitle": "Get Details of Network ACLs",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "afc27ff4-a4da-42a3-8e6f-4cb0b7c03a48"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "25ff5e6b-e22f-40d2-97ed-63528205da41",
+              "name": "Alerts -> Get Details of Network ACLs",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/afc27ff4-a4da-42a3-8e6f-4cb0b7c03a48",
+              "sourceStep": "/api/3/workflow_steps/6137e416-b925-42ad-80bd-9a1b6fd52b01"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606713172,
+          "priority": null,
+          "uuid": "80e1b6c0-476c-415d-b738-4cc1f6353967",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Security Group: Delete Security Groups",
+          "aliasName": null,
+          "description": "Deletes a security group you have specified, using the security group ID.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/4ba8b8c9-6d83-4abe-9a83-c0bacad18fe1",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "20361c4b-a182-4dfb-bdde-448e7bf061b0",
+                "title": "AWS Commands: Delete Security Groups",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "4ba8b8c9-6d83-4abe-9a83-c0bacad18fe1"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Delete Security Groups",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": "",
+                  "security_group_id": "sg-0e3d4bd5c5c712f6c"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "delete_security_group",
+                "operationTitle": "Delete Security Groups",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "220",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "d92eb46c-6840-414b-87db-14a4b002fab7"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "16d91ea8-b4d7-43a4-b252-c875bea9650e",
+              "name": "Alerts -> Delete Security Groups",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/d92eb46c-6840-414b-87db-14a4b002fab7",
+              "sourceStep": "/api/3/workflow_steps/4ba8b8c9-6d83-4abe-9a83-c0bacad18fe1"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606715452,
+          "priority": null,
+          "uuid": "8693ce00-ec9b-44b8-afdf-14bee2a392d4",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Instance: Register Instance To ELB",
+          "aliasName": null,
+          "description": "Registers an AWS Commands instance to the elastic load balancing (ELB) service on AWS based on the ELB name and instance ID you have specified",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/0b031d6b-02b0-4cfd-b5a3-ad2c8d332517",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "5df63d15-04bf-4880-83fa-70b483c18df6",
+                "title": "AWS Commands: Register Instance To ELB",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "0b031d6b-02b0-4cfd-b5a3-ad2c8d332517"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Register Instance To ELB",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "elb_name": "demo",
+                  "assume_role": "",
+                  "instance_id": "i-070b5e78490923c1e"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "register_instance_to_elb",
+                "operationTitle": "Register Instance To ELB",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "220",
+              "top": "100",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "d4a47328-4757-4f7d-9d1a-555a6c1dad91"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "5d2b3465-10da-46fc-995f-fb5448ea738c",
+              "name": "Alerts -> Register Instance To ELB",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/d4a47328-4757-4f7d-9d1a-555a6c1dad91",
+              "sourceStep": "/api/3/workflow_steps/0b031d6b-02b0-4cfd-b5a3-ad2c8d332517"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606481752,
+          "priority": null,
+          "uuid": "8a9c64ca-8644-467b-8fb9-6e792b839797",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Get User Details",
+          "aliasName": null,
+          "description": "Retrieves details for a user you have specified, using the username from AWS.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/90508690-27d3-4411-b5f7-c67a1e6b57e4",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get User Details",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "username": "csadmin",
+                  "assume_role": ""
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "describe_user",
+                "operationTitle": "Describe User",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": []
+              },
+              "status": null,
+              "left": "180",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "396319ac-499f-4d53-a9c6-50ca16936512"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "5796a7b2-c79f-45b2-81d7-64812b906226",
+                "title": "AWS Commands: Get User Details",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "90508690-27d3-4411-b5f7-c67a1e6b57e4"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "fef16c58-aed5-4ca9-a0d4-5b81f1330ad1",
+              "name": "Alerts -> Describe User",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/396319ac-499f-4d53-a9c6-50ca16936512",
+              "sourceStep": "/api/3/workflow_steps/90508690-27d3-4411-b5f7-c67a1e6b57e4"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606481383,
+          "priority": null,
+          "uuid": "8ee9bd0c-e3f7-4afd-b67d-bb6a98bf945b",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Instance: Start Instance",
+          "aliasName": null,
+          "description": "Starts an instance you have specified using the instance ID on AWS Commands.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/1ff55bf9-ed54-4c20-884b-2f5dee3d588a",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "ee9f0f20-3e12-43b5-adda-c0a3d320d87c",
+                "title": "AWS Commands: Start Instance",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "71",
+              "top": "34",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "1ff55bf9-ed54-4c20-884b-2f5dee3d588a"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Start Instance",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": false,
+                  "description": "Start Instance",
+                  "instance_id": "i-0bc93dedba04c8625"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "start_instance",
+                "operationTitle": "Start Instance",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": {
+                  "ResponseMetadata": {
+                    "RequestId": "",
+                    "HTTPHeaders": [],
+                    "RetryAttempts": "",
+                    "HTTPStatusCode": ""
+                  },
+                  "StartingInstances": [
+                    {
+                      "InstanceId": "",
+                      "CurrentState": {
+                        "Code": "",
+                        "Name": ""
+                      },
+                      "PreviousState": {
+                        "Code": "",
+                        "Name": ""
+                      }
+                    }
+                  ]
+                }
+              },
+              "status": null,
+              "left": "260",
+              "top": "172",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "7535947d-09a5-4b92-90dc-04c7f5e153ae"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "5b651471-f3c0-4674-a51a-4aea245a461b",
+              "name": "Alerts -> Start Intance",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/7535947d-09a5-4b92-90dc-04c7f5e153ae",
+              "sourceStep": "/api/3/workflow_steps/1ff55bf9-ed54-4c20-884b-2f5dee3d588a"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606373749,
+          "priority": null,
+          "uuid": "90abe4a7-adb0-44b4-bb2f-a7ade6fae46a",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Security Group: Get Security Groups",
+          "aliasName": null,
+          "description": "Retrieves details of all security groups from the AWS Commands service.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/0d0f7b44-6802-4929-9be6-3100d5c180c2",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "d52b1a28-2cd7-477c-b869-6988a4e4c0a6",
+                "title": "AWS Commands: Get Security Groups",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "0d0f7b44-6802-4929-9be6-3100d5c180c2"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Security Groups",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "",
+                "params": [],
+                "version": "3.1.0",
+                "connector": "aws",
+                "operation": "get_security_groups",
+                "operationTitle": "Get Security Groups",
+                "step_variables": {
+                  "output_data": "{{vars.result.data}}"
+                }
+              },
+              "status": null,
+              "left": "180",
+              "top": "180",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "a51f8911-6069-41dc-a7fe-24f9651f4d97"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "cb3a6ea6-9aab-4e12-adb8-4382c049c670",
+              "name": "Alerts -> Get Security Groups",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/a51f8911-6069-41dc-a7fe-24f9651f4d97",
+              "sourceStep": "/api/3/workflow_steps/0d0f7b44-6802-4929-9be6-3100d5c180c2"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606715954,
+          "priority": null,
+          "uuid": "931973aa-fcda-4126-a150-0aff03b7bc96",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Security Group: Authorize Egress",
+          "aliasName": null,
+          "description": "Adds (authorizes) egress rules to a security group on AWS Commands based on the security group ID, and IP permissions you have specified",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/8f08e955-521e-41a6-ab58-e2c5cce8a805",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "e284f3b1-6546-4287-8008-3936ab61ba64",
+                "title": "AWS Commands: Authorize Egress",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "8f08e955-521e-41a6-ab58-e2c5cce8a805"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Authorize Egress",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": "",
+                  "ip_permissions": "[{\"UserIdGroupPairs\": [], \"IpRanges\": [{\"CidrIp\": \"192.168.0.0/16\"}], \"Ipv6Ranges\": [], \"PrefixListIds\": [], \"IpProtocol\": \"-1\"}]",
+                  "security_group_id": "sg-0d8315d0baf8ac704",
+                  "source_security_group_name": "",
+                  "source_security_group_owner_id": ""
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "authorize_egress",
+                "operationTitle": "Authorize Egress",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "209",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "ec9011f6-915a-440d-8054-b9bbe6e4e1c5"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "e678e8fb-4957-4d2e-b4fe-caefd63a46aa",
+              "name": "Alerts -> Authorize Egress",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/ec9011f6-915a-440d-8054-b9bbe6e4e1c5",
+              "sourceStep": "/api/3/workflow_steps/8f08e955-521e-41a6-ab58-e2c5cce8a805"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606715881,
+          "priority": null,
+          "uuid": "a2ace88f-64e0-4008-bb3a-eefae8a7d36c",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "ACL: Add Network ACL Rule",
+          "aliasName": null,
+          "description": "Adds a rule to the network access control list (ACL) on AWS Commands based on the Network ACL ID, egress rule, and other input parameters you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/103d80e6-dd1e-4ffb-814c-127d4cf8e3a0",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "e5ba2faf-a9e2-4a5b-a4c0-3717713d76da",
+                "title": "AWS Commands: Add Network ACL Rule",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "40",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "103d80e6-dd1e-4ffb-814c-127d4cf8e3a0"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Add Network ACL Rule",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "ip_address": "1.2.3.4",
+                  "assume_role": "",
+                  "egress_rule": "Outbound_Rule",
+                  "rule_action": "ALLOW",
+                  "rule_number": 1,
+                  "network_acl_id": "acl-0930e2b07d3b6cd5d"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "add_network_acl_rule",
+                "operationTitle": "Add Network ACL Rule",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "226",
+              "top": "140",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "6b476c7b-b251-4978-ae4e-023426efcbdf"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "03c0c8e9-6fe8-4101-9c30-6bc6781a14fb",
+              "name": "Alerts -> Add Network ACL Rule1",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/6b476c7b-b251-4978-ae4e-023426efcbdf",
+              "sourceStep": "/api/3/workflow_steps/103d80e6-dd1e-4ffb-814c-127d4cf8e3a0"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606712169,
+          "priority": null,
+          "uuid": "ac76b4e3-f3f3-4fde-82e2-9f1c60658d72",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Security Group: Revoke Egress",
+          "aliasName": null,
+          "description": "Removes (revokes) egress rules from a security group on AWS Commands based on the security group ID, and IP permissions you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/81b5c6ed-b028-484b-baf3-a67be09736c0",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Revoke Egress",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": "",
+                  "ip_permissions": "[{\"UserIdGroupPairs\": [], \"IpRanges\": [{\"CidrIp\": \"192.168.0.0/16\"}], \"Ipv6Ranges\": [], \"PrefixListIds\": [], \"IpProtocol\": \"-1\"}]",
+                  "security_group_id": "sg-0d8315d0baf8ac704",
+                  "source_security_group_name": "",
+                  "source_security_group_owner_id": ""
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "revoke_egress",
+                "operationTitle": "Revoke Egress",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "206",
+              "top": "92",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "7b4645e7-b93b-4c2e-be75-e2764af0407d"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "fb6a9ac5-d5cb-4cee-bbea-ef366fe863e0",
+                "title": "AWS Commands: Revoke Egress",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "81b5c6ed-b028-484b-baf3-a67be09736c0"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "028ce1b8-3d03-4e56-91e7-ac0603374cd2",
+              "name": "Alerts -> Revoke Egress",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/7b4645e7-b93b-4c2e-be75-e2764af0407d",
+              "sourceStep": "/api/3/workflow_steps/81b5c6ed-b028-484b-baf3-a67be09736c0"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606715908,
+          "priority": null,
+          "uuid": "b01f4fa9-2c0e-479b-92bf-682e6e5f5d23",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Volume: Delete Volume",
+          "aliasName": null,
+          "description": "Deletes a volume you have specified, using the volume ID.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/41c14b45-0d70-47db-b4b5-fd24dfd7f310",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Delete Volume",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "volume_id": "vol-0cbe1143aeed8ba33",
+                  "assume_role": ""
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "delete_volume",
+                "operationTitle": "Delete Volume",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": {
+                  "ResponseMetadata": {
+                    "RequestId": "",
+                    "HTTPHeaders": [],
+                    "RetryAttempts": "",
+                    "HTTPStatusCode": ""
+                  }
+                }
+              },
+              "status": null,
+              "left": "280",
+              "top": "160",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "21475444-e16b-4131-b928-b069ed867d2e"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "368e5f2f-6b61-4e89-afe1-4651b9b2f185",
+                "title": "AWS Commands: Delete Volume",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "80",
+              "top": "52",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "41c14b45-0d70-47db-b4b5-fd24dfd7f310"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "8ea4ac00-9f63-49fe-a76b-252a235f7c45",
+              "name": "Alerts -> Delete Volume",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/21475444-e16b-4131-b928-b069ed867d2e",
+              "sourceStep": "/api/3/workflow_steps/41c14b45-0d70-47db-b4b5-fd24dfd7f310"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606714875,
+          "priority": null,
+          "uuid": "b1af11b6-872c-4ec0-95c0-967d4872df99",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Instance: Instance API Termination",
+          "aliasName": null,
+          "description": "Terminates an instance on AWS Commands using the REST API, if you have enabled this operation based on the instance ID and action you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/789e1749-2b7a-4c89-9f50-43afd6f971cd",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Instance API Termination",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "operation": "Disable",
+                  "assume_role": "",
+                  "instance_id": "i-070b5e78490923c1e"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "instance_api_termination",
+                "operationTitle": "Instance API Termination",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": {
+                  "ResponseMetadata": {
+                    "RequestId": "",
+                    "HTTPHeaders": [],
+                    "RetryAttempts": "",
+                    "HTTPStatusCode": ""
+                  }
+                }
+              },
+              "status": null,
+              "left": "240",
+              "top": "160",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "4bcbc527-d248-41b8-8c89-d279aaf0d894"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "21fb72f3-e7d3-4eca-99d0-4174901c21f6",
+                "title": "AWS Commands: Instance API Termination",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "60",
+              "top": "60",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "789e1749-2b7a-4c89-9f50-43afd6f971cd"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "8b74dfa8-869c-457f-abe4-65e1bc046ec0",
+              "name": "Alerts -> Disable Instance API Termination",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/4bcbc527-d248-41b8-8c89-d279aaf0d894",
+              "sourceStep": "/api/3/workflow_steps/789e1749-2b7a-4c89-9f50-43afd6f971cd"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606374280,
+          "priority": null,
+          "uuid": "b37fd9a5-e87b-4a02-8e9a-faa0ee3a74d5",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Instance: Terminate Instance",
+          "aliasName": null,
+          "description": "Terminates an AWS Commands instance you have specified using the instance ID.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/f0ff586c-8665-4ba7-b42c-aed1e0ee9106",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Terminate Instance",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": "",
+                  "instance_id": "i-0a5c62c1ef779bb6f"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "terminate_instance",
+                "operationTitle": "Terminate Instance",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": {
+                  "ResponseMetadata": {
+                    "RequestId": "",
+                    "HTTPHeaders": [],
+                    "RetryAttempts": "",
+                    "HTTPStatusCode": ""
+                  },
+                  "TerminatingInstances": [
+                    {
+                      "InstanceId": "",
+                      "CurrentState": {
+                        "Code": "",
+                        "Name": ""
+                      },
+                      "PreviousState": {
+                        "Code": "",
+                        "Name": ""
+                      }
+                    }
+                  ]
+                }
+              },
+              "status": null,
+              "left": "280",
+              "top": "160",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "30c806c3-0326-4154-83d4-01d51c9d6f0f"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "9989951b-53db-46b4-8399-a24ede280395",
+                "title": "AWS Commands: Terminate Instance",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "100",
+              "top": "53",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "f0ff586c-8665-4ba7-b42c-aed1e0ee9106"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "0622c2d9-7d67-4a69-9735-535c0e22ab32",
+              "name": "Alerts -> Terminate Instance",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/30c806c3-0326-4154-83d4-01d51c9d6f0f",
+              "sourceStep": "/api/3/workflow_steps/f0ff586c-8665-4ba7-b42c-aed1e0ee9106"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606715254,
+          "priority": null,
+          "uuid": "b6922307-7b78-4d3d-8bd3-cb9c539ba508",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Security Group: Authorize Ingress",
+          "aliasName": null,
+          "description": "Adds (authorizes) ingress rules to a security group on AWS Commands based on the security group ID, CIDR IP value, and other input parameters you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/47de24e0-d5c3-42a2-b48a-57383e712a05",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "52351f94-873b-4655-99da-e68d38015444",
+                "title": "AWS Commands: Authorize Ingress",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "47de24e0-d5c3-42a2-b48a-57383e712a05"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Authorize Ingress",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": "",
+                  "ip_permissions": "[{\"IpProtocol\": \"-1\", \"IpRanges\": [{\"CidrIp\": \"0.0.0.0/0\"}], \"Ipv6Ranges\": [], \"PrefixListIds\": [], \"UserIdGroupPairs\": []}]",
+                  "security_group_id": "sg-0d8315d0baf8ac704"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "authorize_ingress",
+                "operationTitle": "Authorize Ingress",
+                "step_variables": []
+              },
+              "status": null,
+              "left": "200",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "bbc6c3ad-8cb6-4799-af07-1cacbc1ee16b"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "68a869a4-d544-4d94-905c-2158e1ffcf3c",
+              "name": "Alerts -> Authorize Ingress",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/bbc6c3ad-8cb6-4799-af07-1cacbc1ee16b",
+              "sourceStep": "/api/3/workflow_steps/47de24e0-d5c3-42a2-b48a-57383e712a05"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606715929,
+          "priority": null,
+          "uuid": "b70e72f5-1e36-412e-ab65-c3bf03f3c37a",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Instance: Get Instance Details",
+          "aliasName": null,
+          "description": "Retrieves details for an instance you have specified, using the instance ID from AWS Commands.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/b1ebbc02-e6e3-4767-958b-7caf31260bd1",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Get Instance Details",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "assume_role": "",
+                  "instance_id": "i-070b5e78490923c1e"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "describe_instance",
+                "operationTitle": "Describe Instance",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": []
+              },
+              "status": null,
+              "left": "212",
+              "top": "150",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "8f4d107e-57e8-4d32-b968-6f703fb1e3e2"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "05c74efd-7e1a-4a13-b008-81d64a2f8860",
+                "title": "AWS Commands: Get Instance Details",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "40",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "b1ebbc02-e6e3-4767-958b-7caf31260bd1"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "55cc6cb8-f41a-4120-8f96-baf003ffb951",
+              "name": "Alerts -> Describe Instance",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/8f4d107e-57e8-4d32-b968-6f703fb1e3e2",
+              "sourceStep": "/api/3/workflow_steps/b1ebbc02-e6e3-4767-958b-7caf31260bd1"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606374360,
+          "priority": null,
+          "uuid": "c50bf3b4-3169-4248-b1a9-eb4c0195f596",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Volume: Capture Volume Snapshot",
+          "aliasName": null,
+          "description": "Captures a snapshot of a volume on AWS Commands based on the volume ID and volume description you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/8b8e28bb-665c-41e0-80b4-d25b7ead9604",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Capture Volume Snapshot",
+              "description": null,
+              "arguments": {
+                "name": "AWS",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "volume_id": "vol-0f31cfcad7573e2b2",
+                  "assume_role": "",
+                  "description": "taking snapshot"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "snapshot_volume",
+                "operationTitle": "Capture Volume Snapshot",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                },
+                "operationOutput": []
+              },
+              "status": null,
+              "left": "220",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "1e965b1e-a90f-4238-af30-3e965212e068"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "c4c7cabd-8209-4278-9d92-59ea620de523",
+                "title": "AWS Commands: Capture Volume Snapshot",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "30",
+              "top": "11",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "8b8e28bb-665c-41e0-80b4-d25b7ead9604"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "bac1dc14-96fa-4d7c-8079-05c86f5dd303",
+              "name": "Alerts -> Take Snapshot of Volumes",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/1e965b1e-a90f-4238-af30-3e965212e068",
+              "sourceStep": "/api/3/workflow_steps/8b8e28bb-665c-41e0-80b4-d25b7ead9604"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606715011,
+          "priority": null,
+          "uuid": "d8bf7cd4-5ed2-42f0-8e25-6ee3c36713f2",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "Security Group: Create Security Groups",
+          "aliasName": null,
+          "description": "Creates a new security group in the AWS Commands service based on the group name and description you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/873751ba-1bb0-474b-945e-8ddb213b4800",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "3796dec7-5e27-4f68-9bca-12a19f760186",
+                "title": "AWS Commands: Create Security Groups",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records}}"
+                  }
+                },
+                "displayConditions": {
+                  "alerts": {
+                    "sort": [],
+                    "limit": 30,
+                    "logic": "AND",
+                    "filters": []
+                  }
+                },
+                "executeButtonText": "Execute",
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "873751ba-1bb0-474b-945e-8ddb213b4800"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Security Groups",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "group_name": "Test-Group",
+                  "assume_role": "",
+                  "description": "Creating security group by CyOPs playbook"
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "create_security_group",
+                "operationTitle": "Create Security Groups",
+                "step_variables": {
+                  "output_data": "{{vars.result.data}}"
+                }
+              },
+              "status": null,
+              "left": "200",
+              "top": "110",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "d34da166-ee25-42d6-b696-3fcb8b34d158"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "f1192d66-84b7-47f7-8c78-7ef7a5c1b7d3",
+              "name": "Alerts -> Create Security Groups",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/d34da166-ee25-42d6-b696-3fcb8b34d158",
+              "sourceStep": "/api/3/workflow_steps/873751ba-1bb0-474b-945e-8ddb213b4800"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606715430,
+          "priority": null,
+          "uuid": "e111f89d-a9af-4c7d-9613-5aabb8120d03",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        },
+        {
+          "@type": "Workflow",
+          "triggerLimit": null,
+          "name": "ACL: Create Network ACL",
+          "aliasName": null,
+          "description": "Creates a network ACL in AWS Commands in the VPC you have specified.",
+          "collection": "/api/3/workflow_collections/a58b6104-95f8-4beb-9bdd-0d031dce22ee",
+          "tag": "#AWS Commands",
+          "isActive": false,
+          "singleRecordExecution": false,
+          "remoteExecutableFlag": false,
+          "parameters": [],
+          "synchronous": false,
+          "triggerStep": "/api/3/workflow_steps/b6e32538-dbb8-4d46-b915-5ea35321cf4c",
+          "steps": [
+            {
+              "@type": "WorkflowStep",
+              "name": "Alerts",
+              "description": null,
+              "arguments": {
+                "route": "e824e99b-7a50-4aea-9751-c2ba80318c90",
+                "title": "AWS Commands: Create Network ACL",
+                "resources": [
+                  "alerts"
+                ],
+                "inputVariables": [],
+                "step_variables": {
+                  "input": {
+                    "records": "{{vars.input.records[0]}}"
+                  }
+                },
+                "noRecordExecution": true,
+                "singleRecordExecution": false
+              },
+              "status": null,
+              "left": "20",
+              "top": "20",
+              "stepType": "/api/3/workflow_step_types/f414d039-bb0d-4e59-9c39-a8f1e880b18a",
+              "uuid": "b6e32538-dbb8-4d46-b915-5ea35321cf4c"
+            },
+            {
+              "@type": "WorkflowStep",
+              "name": "Create Network ACL",
+              "description": null,
+              "arguments": {
+                "name": "AWS Commands",
+                "config": "2b4ed8be-f3b3-4be4-b241-02c3b7b2167b",
+                "params": {
+                  "vpc_id": "vpc-f29a2899",
+                  "assume_role": false
+                },
+                "version": "1.0.0",
+                "connector": "aws",
+                "operation": "create_network_acl",
+                "operationTitle": "Create Network ACL",
+                "step_variables": {
+                  "output_data": "{{vars.result}}"
+                }
+              },
+              "status": null,
+              "left": "188",
+              "top": "120",
+              "stepType": "/api/3/workflow_step_types/0bfed618-0316-11e7-93ae-92361f002671",
+              "uuid": "b8b3e2f6-01f5-4ce7-974f-219a9c1134e4"
+            }
+          ],
+          "routes": [
+            {
+              "@type": "WorkflowRoute",
+              "uuid": "8a64060a-29c0-42fb-924d-0b3889506286",
+              "name": "Alerts -> Create Network ACL",
+              "label": null,
+              "isExecuted": false,
+              "targetStep": "/api/3/workflow_steps/b8b3e2f6-01f5-4ce7-974f-219a9c1134e4",
+              "sourceStep": "/api/3/workflow_steps/b6e32538-dbb8-4d46-b915-5ea35321cf4c"
+            }
+          ],
+          "versions": [],
+          "lastModifyDate": 1606483485,
+          "priority": null,
+          "uuid": "eebb2d83-978b-4240-a6ce-e7f046b5eb13",
+          "recordTags": [
+            "AWS",
+            "AWS Commands"
+          ],
+          "isPrivate": false,
+          "owners": []
+        }
+      ]
+    }
+  ],
+  "exported_tags": [
+    "AWS",
+    "AWS Commands"
+  ]
+}
