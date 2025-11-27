@@ -1,7 +1,7 @@
 """
 Copyright start
 MIT License
-Copyright (c) 2024 Fortinet Inc
+Copyright (c) 2025 Fortinet Inc
 Copyright end
 """
 
@@ -14,6 +14,7 @@ from connectors.core.connector import get_logger, ConnectorError
 from .utils import _get_aws_client, _change_date_format, _is_mfa_device, _get_user_policies, _get_user_groups_details, \
     _get_temp_credentials, _get_list_from_str_or_list, _get_group_ids, _get_aws_resource, \
     _get_cli_environment, _run_aws_cli
+from datetime import datetime, timedelta
 
 logger = get_logger('aws-commands')
 TEMP_CRED_ENDPOINT = 'http://169.254.169.254/latest/meta-data/iam/security-credentials/{}'
@@ -338,10 +339,10 @@ def get_details_for_all_images(config, params):
         logger.info('params are = {}'.format(params))
         logger.info('filetr is  ={}'.format(params.get('filters', [])))
         aws_response = aws_client.describe_images(ExecutableUsers=params.get('executable_users')
-                                                  if params.get('executable_users') else [], Filters=params.get('filters') if params.get('filters') else [],
+        if params.get('executable_users') else [], Filters=params.get('filters') if params.get('filters') else [],
                                                   ImageIds=params.get('image_ids') if params.get(
-            'image_ids') else [],
-            Owners=params.get('owners') if params.get('owners') else [])
+                                                      'image_ids') else [],
+                                                  Owners=params.get('owners') if params.get('owners') else [])
         return aws_response
     except Exception as Err:
         logger.exception(Err)
@@ -508,6 +509,40 @@ def delete_security_group(config, params):
         raise ConnectorError(Err)
 
 
+def revoke_all_active_sessions(config, params):
+    try:
+        role_name = params.get('roleName')
+        lead_seconds = int(params.get('lead_seconds', 30))
+        iam = _get_aws_client(config, params, 'iam')
+        cutoff = datetime.utcnow() + timedelta(seconds=lead_seconds)
+        cutoff_iso = cutoff.strftime("%Y-%m-%dT%H:%M:%SZ")
+        policy_doc = {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Effect": "Deny",
+                    "Action": ["*"],
+                    "Resource": ["*"],
+                    "Condition": {
+                        "DateLessThan": {
+                            "aws:TokenIssueTime": cutoff_iso
+                        }
+                    }
+                }
+            ]
+        }
+        iam.put_role_policy(
+            RoleName=role_name,
+            PolicyName="AWSRevokeOlderSessions",
+            PolicyDocument=json.dumps(policy_doc)
+        )
+        logger.info(f"Attached AWSRevokeOlderSessions to role '{role_name}' with cutoff {cutoff_iso}")
+        return {"status": "success", "role_name": role_name, "cutoff": cutoff_iso, "policy": policy_doc}
+    except Exception as Err:
+        logger.exception(Err)
+        raise ConnectorError(Err)
+
+
 aws_operations = {
     'generic_command': generic_command,
 
@@ -549,4 +584,6 @@ aws_operations = {
     'delete_network_acl': delete_network_acl,
     'delete_network_acl_rule': delete_network_acl_rule,
     'add_network_acl_rule': add_network_acl_rule,
+
+    'revoke_all_active_sessions': revoke_all_active_sessions
 }

@@ -1,7 +1,7 @@
 """
 Copyright start
 MIT License
-Copyright (c) 2024 Fortinet Inc
+Copyright (c) 2025 Fortinet Inc
 Copyright end
 """
 
@@ -147,7 +147,7 @@ def _run_aws_cli(aws_env, command, optional_parameters=""):
         aws_cli_path = f"{os.path.dirname(os.path.realpath(__file__))}/packages/aws-cli/v2/2.18.13/dist/aws"
         if optional_parameters:
             command_line = [aws_cli_path] + \
-                command.split() + optional_parameters.split()
+                           command.split() + optional_parameters.split()
         else:
             command_line = [aws_cli_path] + command.split()
         result = subprocess.run(

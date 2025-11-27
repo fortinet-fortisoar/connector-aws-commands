@@ -1,36 +1,55 @@
 ## About the connector
+
 AWS Commands are used to run AWS native commands for AWS resources configurations directly from FortiSOAR.
 <p>This document provides information about the AWS Commands Connector, which facilitates automated interactions, with a AWS Commands server using FortiSOAR&trade; playbooks. Add the AWS Commands Connector as a step in FortiSOAR&trade; playbooks and perform automated operations with AWS Commands.</p>
 
 ### Version information
 
-Connector Version: 1.0.0
+Connector Version: 1.1.0
 
+Contributor: randomstr1ng
 
 Authored By: Fortinet
 
 Certified: No
+
+## Release Notes for version 1.1.0
+
+Following enhancements have been made to the AWS Commands Connector in version 1.1.0:
+<ul>
+<li>The new action <code>Revoke All Active Sessions</code> has been added.</li>
+</ul>
+
 ## Installing the connector
+
 <p>Use the <strong>Content Hub</strong> to install the connector. For the detailed procedure to install a connector, click <a href="https://docs.fortinet.com/document/fortisoar/0.0.0/installing-a-connector/1/installing-a-connector" target="_top">here</a>.</p><p>You can also use the <code>yum</code> command as a root user to install the connector:</p>
 <pre>yum install cyops-connector-aws-commands</pre>
 
 ## Prerequisites to configuring the connector
+
 - You must have the credentials of AWS Commands server to which you will connect and perform automated operations.
 - The FortiSOAR&trade; server should have outbound connectivity to port 443 on the AWS Commands server.
 
 ## Minimum Permissions Required
+
 - Not applicable
 
 ## Configuring the connector
-For the procedure to configure a connector, click [here](https://docs.fortinet.com/document/fortisoar/0.0.0/configuring-a-connector/1/configuring-a-connector)
+
+For the procedure to configure a connector,
+click [here](https://docs.fortinet.com/document/fortisoar/0.0.0/configuring-a-connector/1/configuring-a-connector)
+
 ### Configuration parameters
+
 <p>In FortiSOAR&trade;, on the Connectors page, click the <strong>AWS Commands</strong> connector row (if you are in the <strong>Grid</strong> view on the Connectors page) and in the <strong>Configurations</strong> tab enter the required configuration details:</p>
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Configuration Type</td><td>Select configuration type that is how you want to provide credentials.
 <br><strong>If you choose 'IAM Role'</strong><ul><li>AWS Instance IAM Role: IAM Role of your AWS instance to access AWS services.</li></ul><strong>If you choose 'Access Credentials'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>AWS Access Key ID: ID of the AWS Access Key to access AWS services.</li><li>AWS Secret Access Key: Key of the AWS Secret Access to access AWS services.</li></ul></td>
 </tr></tbody></table>
 
 ## Actions supported by the connector
-The following automated operations can be included in playbooks and you can also use the annotations to access operations from FortiSOAR&trade; release 4.10.0 and onwards:
+
+The following automated operations can be included in playbooks and you can also use the annotations to access
+operations from FortiSOAR&trade; release 4.10.0 and onwards:
 <table border=1><thead><tr><th>Function</th><th>Description</th><th>Annotation and Category</th></tr></thead><tbody><tr><td>Execute AWS Command</td><td>Executes an AWS command on the host based on the command and other input parameters that you have specified.</td><td>generic_command <br/>Investigation</td></tr>
 <tr><td>Get AMIs Detail</td><td>Retrieves details for all AMIs (Amazon Machine Images) or specific AMIs, based on input parameters you have specified from AWS.</td><td>get_ami_details <br/>Investigation</td></tr>
 <tr><td>Launch Instance</td><td>Launches a new instance on AWS having basic configuration based on the image ID, instance type, and other input parameters you have specified.</td><td>launch_instance <br/>Miscellaneous</td></tr>
@@ -64,19 +83,25 @@ The following automated operations can be included in playbooks and you can also
 <tr><td>Authorize Egress</td><td>Adds (authorizes) egress rules to a security group on AWS Commands based on the security group ID, and IP permissions you have specified.</td><td>authorize_egress <br/>Containment</td></tr>
 <tr><td>Revoke Egress</td><td>Removes (revokes) egress rules from a security group on AWS Commands based on the security group ID, and IP permissions you have specified.</td><td>revoke_egress <br/>Containment</td></tr>
 <tr><td>Revoke Ingress</td><td>Removes (revokes) ingress rules from a security group on AWS Commands based on the security group ID, CIDR IP value, and other input parameters you have specified.</td><td>revoke_ingress <br/>Containment</td></tr>
+<tr><td>Revoke All Active Sessions<br></td><td>When you use this operation, IAM attaches an inline policy named AWSRevokeOlderSessions to the role. This policy blocks all currently active sessions for that role, while still allowing new sessions to be created. If you need to undo this action later, simply remove the inline policy.<br></td><td>revoke_all_active_sessions <br/>Remediation<br></td></tr>
 </tbody></table>
 
 ### operation: Execute AWS Command
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Command</td><td>Specify the AWS command, without the aws, to run on the host. For example, if you want to run the command aws ec2 describe-instances to list all EC2 instances, Specify ec2 describe-instances in this field.
 <br></td></tr><tr><td>Parameters</td><td>Specify a parameter name and its value to filter the results returned by the command. For information on parameters, refer https://docs.aws.amazon.com/cli/#latest-version
 <br></td></tr></tbody></table>
 
 #### Output
 
- The output contains a non-dictionary value.
+The output contains a non-dictionary value.
+
 ### operation: Get AMIs Detail
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Image IDs</td><td>List of IDs of the AMIs whose details you want to retrieve from AWS Commands.
 </td></tr><tr><td>Executable Users</td><td>List of AWS Account IDs of executable users(s) associated with the AMI(s) whose details you want to retrieve from AWS Commands.
@@ -85,6 +110,7 @@ The following automated operations can be included in playbooks and you can also
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -121,8 +147,11 @@ The output contains the following populated JSON schema:
         "RetryAttempts": ""
     }
 }</pre>
+
 ### operation: Launch Instance
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Image ID</td><td>ID of the AMI on which you want to launch a new instance. You can get the ID of an AMI using the Get AMIs Detail operation.
 </td></tr><tr><td>Instance Type</td><td>Type of the instance that you want to launch on AWS Commands. For example, t1.micro
@@ -138,6 +167,7 @@ The output contains the following populated JSON schema:
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -158,13 +188,17 @@ The output contains the following populated JSON schema:
         "Value": ""
     }
 }</pre>
+
 ### operation: Get Instance Details
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Instance ID</td><td>ID of the instance for which you want to retrieve details from AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -230,14 +264,18 @@ The output contains the following populated JSON schema:
         }
     ]
 }</pre>
+
 ### operation: Start Instance
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Instance ID</td><td>ID of the instance that you want to start on AWS Commands.
 </td></tr><tr><td>Purpose</td><td>Purpose of starting the instance on AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -267,13 +305,17 @@ The output contains the following populated JSON schema:
         }
     ]
 }</pre>
+
 ### operation: Stop Instance
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Instance ID</td><td>ID of the instance that you want to stop on AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -297,13 +339,17 @@ The output contains the following populated JSON schema:
         "HTTPStatusCode": ""
     }
 }</pre>
+
 ### operation: Reboot Instance
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Instance ID</td><td>ID of the instance that you want to reboot on AWS Commands
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -320,8 +366,11 @@ The output contains the following populated JSON schema:
         "HTTPStatusCode": ""
     }
 }</pre>
+
 ### operation: Add Instance Tag
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Instance ID</td><td>ID of the AWS Commands instance to which you want to add a tag.
 </td></tr><tr><td>Tag Key</td><td>Key for the tag that you want to add.
@@ -329,6 +378,7 @@ The output contains the following populated JSON schema:
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -339,14 +389,18 @@ The output contains the following populated JSON schema:
         "HTTPStatusCode": ""
     }
 }</pre>
+
 ### operation: Register Instance To ELB
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>ELB Name</td><td>Name of the ELB to which you want to register the specified instance on AWS Commands.
 </td></tr><tr><td>Instance ID</td><td>ID of the instance that you want to register with the specified ELB on AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -370,14 +424,18 @@ The output contains the following populated JSON schema:
         "RequestId": ""
     }
 }</pre>
+
 ### operation: Deregister Instance from ELB
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>ELB Name</td><td>Name of the ELB from which you want to deregister the specified instance on AWS Commands.
 </td></tr><tr><td>Instance ID</td><td>ID of the instance that you want to deregister from the specified ELB on AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -394,14 +452,18 @@ The output contains the following populated JSON schema:
         "RequestId": ""
     }
 }</pre>
+
 ### operation: Attach Instance To Auto Scaling Group
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Auto Scaling Group Name</td><td>Name of the auto scaling group to which you want to attach the specified instance on AWS Commands.
 </td></tr><tr><td>Instance IDs (In CSV or List Format)</td><td>ID(s) of the instance(s) that you want to attach to the specified auto scaling group using the CSV or list format on AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -417,14 +479,18 @@ The output contains the following populated JSON schema:
         "RetryAttempts": ""
     }
 }</pre>
+
 ### operation: Detach Instance From Auto Scaling Group
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Auto Scaling Group Name (In CSV or List Format)</td><td>Name of the auto scaling group from which you want to detach the specified instance on AWS Commands.
 </td></tr><tr><td>Instance IDs</td><td>ID of the instance that you want to detach from the specified auto scaling group on AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -452,14 +518,18 @@ The output contains the following populated JSON schema:
         "RetryAttempts": ""
     }
 }</pre>
-### operation: Instance API Termination 
+
+### operation: Instance API Termination
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Instance ID</td><td>ID of the instance that you want to terminate on AWS Commands using the REST API.
 </td></tr><tr><td>Select Action</td><td>Specify Enable or Disable to either allow or disallow terminating an instance using the REST API.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -470,13 +540,17 @@ The output contains the following populated JSON schema:
         "HTTPStatusCode": ""
     }
 }</pre>
+
 ### operation: Terminate Instance
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Instance ID</td><td>ID of the AWS Commands instance that you want to terminate.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -500,8 +574,11 @@ The output contains the following populated JSON schema:
         "HTTPStatusCode": ""
     }
 }</pre>
+
 ### operation: Attach Volume
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Volume Id</td><td>ID of the volume that you want to attach to the specified instance on AWS Commands.
 </td></tr><tr><td>Device Name</td><td>Name (or full path) of the device on the specified instance on AWS Commands. For example, /dev/sdh or xvdh.
@@ -509,6 +586,7 @@ The output contains the following populated JSON schema:
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -530,14 +608,18 @@ The output contains the following populated JSON schema:
     },
     "VolumeId": ""
 }</pre>
+
 ### operation: Capture Volume Snapshot
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Volume ID</td><td>ID of the volume on AWS Commands for which you want to capture a snapshot.
 </td></tr><tr><td>Volume Description</td><td>Description of the snapshot.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -549,8 +631,11 @@ The output contains the following populated JSON schema:
     "VolumeId": "",
     "ResponseMetadata": {}
 }</pre>
+
 ### operation: Detach Volume
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Volume Id</td><td>ID of the volume that you want to detach from the specified instance on AWS Commands.
 </td></tr><tr><td>Device Name</td><td>Name (or full path) of the device on the specified instance on AWS Commands. For example, /dev/sdh or xvdh.
@@ -559,6 +644,7 @@ The output contains the following populated JSON schema:
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -580,13 +666,17 @@ The output contains the following populated JSON schema:
     },
     "VolumeId": ""
 }</pre>
+
 ### operation: Delete Volume
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Volume ID</td><td>ID of the volume that you want to delete on AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -597,13 +687,17 @@ The output contains the following populated JSON schema:
         "HTTPStatusCode": ""
     }
 }</pre>
+
 ### operation: Create Network ACL
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>VPC ID</td><td>ID of the VPC in which you want to create the network ACL in AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -648,8 +742,11 @@ The output contains the following populated JSON schema:
         "RetryAttempts": ""
     }
 }</pre>
+
 ### operation: Add Network ACL Rule
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Network ACL ID</td><td>ID of the network in which you want to add the ACL rule on AWS Commands.
 </td></tr><tr><td>Egress Rule</td><td>Select either Inbound_Rule or Outbound_Rule.
@@ -659,6 +756,7 @@ The output contains the following populated JSON schema:
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -675,14 +773,18 @@ The output contains the following populated JSON schema:
         "RetryAttempts": ""
     }
 }</pre>
+
 ### operation: Get Details of Network ACLs
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Network ACL IDs</td><td>IDs of the network ACL whose details you want to retrieve from AWS Commands. Note: If you do not specify and ID then details of all the Network ACLs are retrieved from AWS Commands.
 </td></tr><tr><td>Filters</td><td>Filters based on which you want to retrieve details for network ACL from AWS Commands. Format of the filter is: [{'Name': 'string','Values': ['string']}] For example, [{'Name': 'vpc-id','Values': ['vpc-a01106c2']}]
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -724,8 +826,11 @@ The output contains the following populated JSON schema:
         "RetryAttempts": ""
     }
 }</pre>
+
 ### operation: Delete Network ACL Rule
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Network ACL ID</td><td>ID of the network from which you want to delete the ACL rule on AWS Commands.
 </td></tr><tr><td>Egress Rule</td><td>Select either Inbound_Rule or Outbound_Rule.
@@ -733,6 +838,7 @@ The output contains the following populated JSON schema:
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -749,13 +855,17 @@ The output contains the following populated JSON schema:
         "RetryAttempts": ""
     }
 }</pre>
+
 ### operation: Delete Network ACL
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Network ACL ID</td><td>ID of the network ACL that you want to delete from AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -772,13 +882,17 @@ The output contains the following populated JSON schema:
         "RetryAttempts": ""
     }
 }</pre>
+
 ### operation: Get User Details
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Username</td><td>Name of the user for whom you want to retrieve details from AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -789,14 +903,18 @@ The output contains the following populated JSON schema:
     "CreateDate": "",
     "UserID": ""
 }</pre>
+
 ### operation: Create Security Groups
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Group Name</td><td>Name of the new security group that you want to create on AWS Commands.
 </td></tr><tr><td>Description</td><td>Description of the new security group that you want to create on AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -813,12 +931,16 @@ The output contains the following populated JSON schema:
     },
     "GroupId": ""
 }</pre>
+
 ### operation: Get Security Groups
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -872,13 +994,17 @@ The output contains the following populated JSON schema:
         }
     ]
 }</pre>
+
 ### operation: Get Details of Security Group
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Security Group ID</td><td>ID of the Security Group to retrive details from AWS.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -932,14 +1058,18 @@ The output contains the following populated JSON schema:
         }
     ]
 }</pre>
+
 ### operation: Add Security Group To Instance
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Instance ID</td><td>ID of the instance that you want to add to the specified Security Group(s) on AWS Commands.
 </td></tr><tr><td>Security Group Name or ID (In CSV or List Format)</td><td>Name(s) or ID(s) of the Security Group(s) to which you want to add the specified instance on AWS Commands. The Security Group ID(s) or Name(s) must be specified in the CSV or list format.For example, ["default", "launch-wizard-3", "sg-9fc7dcf7"]
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -947,13 +1077,17 @@ The output contains the following populated JSON schema:
         "ResponseMetadata": {}
     }
 }</pre>
+
 ### operation: Delete Security Groups
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Security Group ID</td><td>ID of the security group ID that you want to delete from AWS Commands.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -975,14 +1109,18 @@ The output contains the following populated JSON schema:
     "message": "",
     "env": {}
 }</pre>
+
 ### operation: Authorize Ingress
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Security Group ID</td><td>ID of the security group ID on AWS Commands in which you want to authorize (add) the ingress rule.
 </td></tr><tr><td>IP Permissions</td><td>IP permissions required to Authorize ingress rules.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -998,14 +1136,18 @@ The output contains the following populated JSON schema:
         "RetryAttempts": ""
     }
 }</pre>
+
 ### operation: Authorize Egress
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Security Group ID</td><td>ID of the security group ID on AWS Commands in which you want to authorize (add) egress rules.
 </td></tr><tr><td>IP Permissions</td><td>IP permissions required to authorize egress rules.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -1021,14 +1163,18 @@ The output contains the following populated JSON schema:
         }
     }
 }</pre>
+
 ### operation: Revoke Egress
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Security Group ID</td><td>ID of the security group ID on AWS Commands from which you want to revoke (remove) egress rules.
 </td></tr><tr><td>IP Permissions</td><td>IP permissions required to revoke egress rules.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -1044,14 +1190,18 @@ The output contains the following populated JSON schema:
         "RequestId": ""
     }
 }</pre>
+
 ### operation: Revoke Ingress
+
 #### Input parameters
+
 <table border=1><thead><tr><th>Parameter</th><th>Description</th></tr></thead><tbody><tr><td>Assume a Role</td><td>Select this option to assume a role.Note: You must enable this option, i.e., this parameter is required, if you have specified IAM Role as the Configuration Type. If you have specified Access Credentials as the Configuration Type, then this parameter is optional.If you select this option, then you must specify the following parameters: AWS Region: Your account's AWS region that you will use to access AWS services. Role ARN: ARN of the role that you want to assume to execute this action on AWS. Session Name: Name of the session that will be created to execute this action on AWS.
 <br><strong>If you choose 'true'</strong><ul><li>AWS Region: Your account's AWS region that you will use to access AWS services.</li><li>Role ARN: ARN of the role that you want assume to execute this action on AWS.</li><li>Session Name: Name of the session that will be created to execute this action on AWS.</li></ul></td></tr><tr><td>Security Group ID</td><td>ID of the security group ID on AWS Commands from which you want to revoke (remove) the ingress rule.
 </td></tr><tr><td>IP Permissions</td><td>IP permissions required to revoke ingress rules.
 </td></tr></tbody></table>
 
 #### Output
+
 The output contains the following populated JSON schema:
 
 <pre>{
@@ -1073,8 +1223,23 @@ The output contains the following populated JSON schema:
     "env": {},
     "message": ""
 }</pre>
+
+### operation: Revoke All Active Sessions
+
+#### Input parameters
+
+<table border=1><thead><tr><th>Parameter<br></th><th>Description<br></th></tr></thead><tbody><tr><td>Role Name<br></td><td>Specify the name of the role whose active sessions you want to revoke.<br>
+</td></tr></tbody></table>
+
+#### Output
+
+The output contains a non-dictionary value.
+
 ## Included playbooks
-The `Sample - aws-commands - 1.0.0` playbook collection comes bundled with the AWS Commands connector. These playbooks contain steps using which you can perform all supported actions. You can see bundled playbooks in the **Automation** > **Playbooks** section in FortiSOAR&trade; after importing the AWS Commands connector.
+
+The `Sample - AWS Commands - 1.1.0` playbook collection comes bundled with the AWS Commands connector. These playbooks
+contain steps using which you can perform all supported actions. You can see bundled playbooks in the **Automation** > *
+*Playbooks** section in FortiSOAR&trade; after importing the AWS Commands connector.
 
 - Execute AWS Command
 - Get AMIs Detail
@@ -1088,7 +1253,7 @@ The `Sample - aws-commands - 1.0.0` playbook collection comes bundled with the A
 - Deregister Instance from ELB
 - Attach Instance To Auto Scaling Group
 - Detach Instance From Auto Scaling Group
-- Instance API Termination 
+- Instance API Termination
 - Terminate Instance
 - Attach Volume
 - Capture Volume Snapshot
@@ -1109,5 +1274,8 @@ The `Sample - aws-commands - 1.0.0` playbook collection comes bundled with the A
 - Authorize Egress
 - Revoke Egress
 - Revoke Ingress
+- Revoke All Active Sessions
 
-**Note**: If you are planning to use any of the sample playbooks in your environment, ensure that you clone those playbooks and move them to a different collection since the sample playbook collection gets deleted during connector upgrade and delete.
+**Note**: If you are planning to use any of the sample playbooks in your environment, ensure that you clone those
+playbooks and move them to a different collection since the sample playbook collection gets deleted during connector
+upgrade and delete.
