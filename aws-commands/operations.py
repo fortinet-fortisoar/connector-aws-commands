@@ -1,7 +1,7 @@
 """
 Copyright start
 MIT License
-Copyright (c) 2024 Fortinet Inc
+Copyright (c) 2025 Fortinet Inc
 Copyright end
 """
 
@@ -339,10 +339,10 @@ def get_details_for_all_images(config, params):
         logger.info('params are = {}'.format(params))
         logger.info('filetr is  ={}'.format(params.get('filters', [])))
         aws_response = aws_client.describe_images(ExecutableUsers=params.get('executable_users')
-                                                  if params.get('executable_users') else [], Filters=params.get('filters') if params.get('filters') else [],
+        if params.get('executable_users') else [], Filters=params.get('filters') if params.get('filters') else [],
                                                   ImageIds=params.get('image_ids') if params.get(
-            'image_ids') else [],
-            Owners=params.get('owners') if params.get('owners') else [])
+                                                      'image_ids') else [],
+                                                  Owners=params.get('owners') if params.get('owners') else [])
         return aws_response
     except Exception as Err:
         logger.exception(Err)
@@ -507,6 +507,7 @@ def delete_security_group(config, params):
     except Exception as Err:
         logger.exception(Err)
         raise ConnectorError(Err)
+
 
 def revoke_all_active_sessions(config, params):
     try:

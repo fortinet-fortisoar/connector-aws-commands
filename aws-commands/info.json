@@ -5,9 +5,10 @@
   "publisher": "Fortinet",
   "cs_approved": false,
   "cs_compatible": true,
-  "version": "1.0.1",
+  "version": "1.1.0",
+  "contributor": "randomstr1ng",
   "category": "IT Services",
-  "help_online": "https://github.com/fortinet-fortisoar/connector-aws-commands/blob/release/1.0.1/docs/AWSCommandsConnectorDoc.md",
+  "help_online": "https://github.com/fortinet-fortisoar/connector-aws-commands/blob/release/1.1.0/docs/AWSCommandsConnectorDoc.md",
   "icon_small_name": "AWS_small.png",
   "icon_large_name": "AWS_large.png",
   "configuration": {
@@ -3843,23 +3844,25 @@
       }
     },
     {
-            "title": "Revoke all active sessions",
-            "operation": "revoke_all_active_sessions",
-            "description": "If you choose Revoke active sessions, IAM attaches an inline policy named AWSRevokeOlderSessions to this role. This policy denies access to all currently active sessions for this role. You can continue to create new sessions based on this role. If you need to undo this action later, you can remove the inline policy.",
-            "parameters": [
-                {
-                    "title": "Role Name",
-                    "type": "text",
-                    "name": "roleName",
-                    "required": true,
-                    "visible": true,
-                    "editable": true,
-                    "value": "",
-                    "tooltip": "Provide a Role Name from which you want to revoke all active sessions.",
-                }
-            ],
-            "open": false,
-            "category": "remediation"
+      "title": "Revoke All Active Sessions",
+      "operation": "revoke_all_active_sessions",
+      "annotation": "revoke_all_active_sessions",
+      "category": "remediation",
+      "enabled": true,
+      "description": "When you use this operation, IAM attaches an inline policy named AWSRevokeOlderSessions to the role. This policy blocks all currently active sessions for that role, while still allowing new sessions to be created. If you need to undo this action later, simply remove the inline policy.",
+      "parameters": [
+        {
+          "title": "Role Name",
+          "description": "Specify the name of the role whose active sessions you want to revoke.",
+          "type": "text",
+          "name": "roleName",
+          "required": true,
+          "visible": true,
+          "editable": true,
+          "tooltip": "Specify the name of the role whose active sessions you want to revoke."
         }
+      ],
+      "output_schema": {}
+    }
   ]
 }
